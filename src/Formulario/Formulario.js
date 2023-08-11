@@ -5,7 +5,7 @@ import ListadeEquipos from "../componentes/ListadeEquipos/ListadeEquipos"
 import Boton from "../componentes/Boton/Boton"
 
 
-const Formulario = () => {
+const Formulario = (props) => {
 
     const [nombre, actualizarNombre] = useState("")
     const [puesto, actualizarPuesto] = useState("")
@@ -53,7 +53,10 @@ const Formulario = () => {
 
             <ListadeEquipos 
                 valor={equipo}
-                actualizarEquipo={actualizarEquipo}/>
+                actualizarEquipo={actualizarEquipo} 
+                equipos = {props.equipos}
+            />
+
             <Boton>
                 Crear
             </Boton>
