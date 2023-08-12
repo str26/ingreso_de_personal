@@ -4,17 +4,31 @@ import Header from "./componentes/Header/Header"
 import MiOrg from './componentes/MiOrg/MiOrg';
 import Formulario from './Formulario/Formulario';
 import Equipo from './componentes/Equipo/Equipo';
-import ListadeEquipos from './componentes/ListadeEquipos/ListadeEquipos';
 import Colaborador from './componentes/Colaborador/Colaborador';
+import Footer from './componentes/Footer/Fotter';
 
 
 function App() {
   const [mostrarFormulario, actualizarMostrar]= useState(false) //cambiar a true para que muestre formulario
+  const [colaboradores, actualizarColaboradores] = useState([{
+    nombre: "Esther Ortegon",
+    cargo: "Tutor",
+    equipo: "Programacion",
+    foto:   "http://www.github.com/str26.png"
+  }])
 
   //Ternario ---> condicion si es verdadera seMuestra : noSeMuestra
 
   const cambiarMostrar = () => {
     actualizarMostrar(!mostrarFormulario)
+  }
+
+  //Registrar Colaborador
+
+  const registrarColaborador = (colaborador) => {
+    console.log("Nuevo Colaborador", colaborador)
+    //Spread operator - propagacion
+    actualizarColaboradores([...colaboradores, colaborador])
   }
 
   //Lista de ListadeEquipos
@@ -54,25 +68,35 @@ function App() {
       titulo: "Inovaccion y gestion",
       colorPrimario: "#FF8A29",
       colorSecundario: "#FFEEDF"
-    }   
-       
+    }     
 ]
 
 return (
     <div>
       <Header />
-      {/*mostrarFormulario ?  /> : <></>}   {/*mostrarFormulario === true ? <Formulario /> : <div></div>} simplificar codigo*/} 
-     {mostrarFormulario && <Formulario equipos={equipos.map((equipo) => equipo.titulo)}/>}  
+      {/*operador ternario-/*mostrarFormulario ?  /> : <></>}   {/*mostrarFormulario === true ? <Formulario /> : <div></div>} simplificar codigo*/} 
+     {
+     mostrarFormulario && <Formulario 
+        equipos={equipos.map((equipo) => equipo.titulo)}
+        registrarColaborador = {registrarColaborador}
+        />
+      }  
+     
       <MiOrg cambiarMostrar={cambiarMostrar}/>{}
       
       {
-        equipos.map((equipo) => <Equipo datos={equipo} key={equipo.titulo}/>)
+        equipos.map((equipo) => <Equipo 
+          datos={equipo} 
+          key={equipo.titulo}
+          colaboradores = {colaboradores.filter( colaborador => colaborador.equipo === equipo.titulo)}
+          />
+          )
       }
 
-      <Colaborador />
+      <Footer />
 
     </div>
   );
-  }
+}
 
 export default App;
