@@ -10,32 +10,44 @@ import Footer from './componentes/Footer/Fotter';
 
 function App() {
   const [mostrarFormulario, actualizarMostrar]= useState(false) //cambiar a true para que muestre formulario
-  const [colaboradores, actualizarColaboradores] = useState([{
+  const [colaboradores, actualizarColaboradores] = useState([
+  {
     nombre: "Esther Ortegon",
-    cargo: "Tutor",
-    equipo: "Programacion",
-    foto:   "http://www.github.com/str26.png"
+    puesto: "Desarrolladora de software e instructora",
+    foto:   "http://www.github.com/str26.png",
+    equipo: "Programación"
+  },
+  {
+    nombre: "Genesys Rondón",
+    puesto: "Desarrolladora de software e instructora",
+    foto:   "https://github.com/genesysaluralatam.png",
+    equipo: "FrontEnd"
+  },
+  {
+    nombre: "Jeanmarie Quijada",
+    puesto: "Instructora en Alura Latam",
+    foto: "https://github.com/JeanmarieAluraLatam.png",
+    equipo: "UX y Diseño"
+    
+  },
+  {
+    nombre: "Christian Velasco",
+    puesto: "Head de Alura e Instructor",
+    foto: "https://github.com/christianpva.png",
+    equipo: "Programación"
+    
+  },
+  {
+    nombre: "Jose Gonzalez",
+    puesto: "Dev FullStack",
+    foto: "https://github.com/JoseDarioGonzalezCha.png",
+    equipo: "Innovación y Gestión"
+    
   }])
 
-  //Ternario ---> condicion si es verdadera seMuestra : noSeMuestra
-
-  const cambiarMostrar = () => {
-    actualizarMostrar(!mostrarFormulario)
-  }
-
-  //Registrar Colaborador
-
-  const registrarColaborador = (colaborador) => {
-    console.log("Nuevo Colaborador", colaborador)
-    //Spread operator - propagacion
-    actualizarColaboradores([...colaboradores, colaborador])
-  }
-
-  //Lista de ListadeEquipos
-  const equipos = [
-    
+  const {equipos, actualizarEquipos} = useState ([
     {
-      titulo: "Programacion",
+      titulo: "Programación",
       colorPrimario: "#57C278",
       colorSecundario: "#D9F7E9"
     },
@@ -55,7 +67,7 @@ function App() {
       colorSecundario: "#FDE7E8"
     },
     {
-      titulo: "UX y diseño",
+      titulo: "UX y Diseño",
       colorPrimario: "#DB6EBF",
       colorSecundario: "#FAE9F5"
     },
@@ -65,11 +77,48 @@ function App() {
       colorSecundario: "#FFF5D9"
     },
     {
-      titulo: "Inovaccion y gestion",
+      titulo: "Innovación y Gestión",
       colorPrimario: "#FF8A29",
       colorSecundario: "#FFEEDF"
     }     
-]
+  ])
+
+  //Ternario ---> condicion si es verdadera seMuestra : noSeMuestra
+
+  const cambiarMostrar = () => {
+    actualizarMostrar(!mostrarFormulario)
+  }
+
+  //Registrar Colaborador
+
+  const registrarColaborador = (colaborador) => {
+    console.log("Nuevo Colaborador", colaborador)
+    //Spread operator - propagacion
+    actualizarColaboradores([...colaboradores, colaborador])
+  }
+
+  //Eliminar Colaborador
+  const eliminarColaborador = () => {
+    console.log("Eliminar colaborador")
+  }
+
+//Actualizar color de equipo
+const actualizarColor = (color, titulo) => {
+  console.log("actualizar: ", color, titulo)
+  const equiposActualizados = equipos.map((equipo) => {
+    if (equipo.titulo === titulo){
+      equipo.colorPrimario =  color
+    }
+
+    return equipo
+  })
+
+  actualizarEquipos(equiposActualizados)
+
+}
+
+  //Lista de ListadeEquipos se fue para la linea 48
+   
 
 return (
     <div>
@@ -78,18 +127,21 @@ return (
      {
      mostrarFormulario && <Formulario 
         equipos={equipos.map((equipo) => equipo.titulo)}
-        registrarColaborador = {registrarColaborador}
+        registrarColaborador={registrarColaborador}
         />
       }  
      
-      <MiOrg cambiarMostrar={cambiarMostrar}/>{}
+      <MiOrg cambiarMostrar={cambiarMostrar}/>
       
       {
-        equipos.map((equipo) => <Equipo 
-          datos={equipo} 
+        equipos.map((equipo) => <Equipo
+          datos={equipo}
           key={equipo.titulo}
-          colaboradores = {colaboradores.filter( colaborador => colaborador.equipo === equipo.titulo)}
+          colaboradores={colaboradores.filter(colaborador => colaborador.equipo === equipo.titulo)}
+          eliminarColaborador={eliminarColaborador}
+          actualizarColor={actualizarColor}
           />
+          
           )
       }
 

@@ -4,12 +4,10 @@ import Colaborador from "../Colaborador/Colaborador"
 const Equipo = (props) => {
     //Destructuracion
     const { colorPrimario, colorSecundario, titulo} = props.datos
-    const { colaboradores } = props
+    const { colaboradores, eliminarColaborador, actualizarColor } = props
     const obj = {
         backgroundColor: colorSecundario
     }
-
-    console.log(colaboradores.length > 0)
 
     const estiloTitulo = {borderColor: colorPrimario}
 
@@ -17,6 +15,15 @@ const Equipo = (props) => {
         {
             colaboradores.length > 0 &&
             <section className="equipo" style={obj}>
+                <input 
+                    className="input__color"
+                    type="color"
+                    value={colorSecundario}
+                    oonChange={(evento) => {
+                        actualizarColor(evento.target.value, titulo)
+                    }}
+                />
+
                 <h3 style={estiloTitulo} >{titulo}</h3>
                 <div className="colaboradores">
                     {
@@ -24,6 +31,8 @@ const Equipo = (props) => {
                             datos={colaborador}
                             key={index}
                             colorPrimario={colorPrimario}
+                            eliminarColaborador = {eliminarColaborador }
+                            
                         />)
                     }
                 </div>
